@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZENCH Network</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --modal-bg: rgba(0, 0, 0, 0.7);
+    }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1503264116251-35a269479413');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text);
+      transition: 0.3s;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: -1;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 235, 59, 0.3);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0 0 16px 16px;
+    }
+    .title, .subtitle, .subtitle2 {
+      text-align: center;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .title { font-size: 32px; font-weight: bold; margin-top: 30px; }
+    .subtitle { font-size: 20px; }
+    .subtitle2 { font-size: 20px; margin-bottom: 15px; }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .btn {
+      margin: 10px auto;
+      width: 80%;
+      max-width: 400px;
+      padding: 15px;
+      border-radius: 20px;
+      background: #000;
+      color: white;
+      text-align: center;
+      cursor: pointer;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.3s;
+      border: none;
+    }
+    .btn:hover { opacity: 0.8; transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .blue { background: #3b48f3; }
+    .black { background: #000; }
+    .green { background: #4caf50; }
+    .theme-toggle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #000;
+      cursor: pointer;
+    }
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+      color: black;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 250px;
+      height: 100%;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      transition: 0.3s;
+      z-index: 999;
+      backdrop-filter: blur(8px);
+    }
+    .sidebar.open { left: 0; }
+    .sidebar a {
+      display: block;
+      padding: 10px 0;
+      color: #333;
+      text-decoration: none;
+    }
+    .dark-mode {
+      --bg: #111;
+      --text: #fff;
+    }
+    .dark-mode .btn { background: #222; }
+    .dark-mode .blue { background: #4455ff; }
+    .dark-mode .title, .dark-mode .subtitle, .dark-mode .subtitle2, .dark-mode .menu-icon { color: white; }
+    .dark-mode .sidebar { background: rgba(30,30,30,0.9); }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--modal-bg);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .modal.active { opacity: 1; pointer-events: all; }
+    .modal-content {
+      background: rgba(255,255,255,0.9);
+      padding: 25px;
+      border-radius: 15px;
+      width: 85%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      text-align: center;
+    }
+    .modal-content img { margin-top: 15px; max-width: 100px; }
+    .modal-close {
+      background: #3b48f3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
+    <div class="theme-toggle" onclick="toggleTheme()"></div>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <p><strong>Menu ZENCH</strong></p>
+    <a href="https://minecraftpocket-servers.com/server/130931/vote/">Status Server dan Vote</a>
+    <a href="#" onclick="alert('Aturan:
+1. No cheat
+2. No grief
+3. Respect player')">Aturan Server</a>
+    <a href="https://chat.whatsapp.com/KMkcVHJU1irEs4DJhgnnzr">Update Terbaru</a>
+    <a href="#" onclick="showInfo()">Tentang Kami</a>
+  </div>
+
+  <div class="container">
+    <div class="title">ZENCH Network Server</div>
+    <div class="subtitle">play.zenchmc.my.id</div>
+    <div class="subtitle2">Port: 19132</div>
+
+    <a href="https://chat.whatsapp.com/KMkcVHJU1irEs4DJhgnnzr" class="btn">Group WhatsApp</a>
+    <a href="https://discord.gg/CggtT8QFCd" class="btn">Discord Server</a>
+    <a href="https://wa.me/6285883203969?text=halo%20bang,mau%20join%20clan" class="btn">Join Clan AuxDieux</a>
+
+    <div class="btn black" onclick="showInfo()">Tentang ZENCH</div>
+    <div class="btn green" onclick="startCountryGameAPI()">Game Tebak Negara</div>
+    <div class="btn blue" onclick="startGame()">Game Tebak Angka</div>
+  </div>
+
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <h2>Tentang ZENCH Network</h2>
+      <p>ZENCH Network adalah server Minecraft PE/Bedrock dengan komunitas seru dan aktif.</p>
+      <p>Alamat: play.zenchmc.my.id<br/>Port: 19132<br/>Versi: Minecraft Bedrock 1.21+</p>
+      <button class="modal-close" onclick="closeInfo()">Tutup</button>
+    </div>
+  </div>
+
+  <div class="modal" id="countryModal">
+    <div class="modal-content" id="countryModalContent">
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+    function showInfo() {
+      document.getElementById('infoModal').classList.add('active');
+    }
+    function closeInfo() {
+      document.getElementById('infoModal').classList.remove('active');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    function startGame() {
+      let angka = Math.floor(Math.random() * 10) + 1;
+      let tebakan = prompt("Tebak angka 1-10:");
+      if (parseInt(tebakan) === angka) alert("Benar! 🎉");
+      else alert(`Salah! Jawaban: ${angka}`);
+    }
+
+    let apiCountries = [], currentApiCountry, apiAttempts = 3;
+    async function fetchCountries() {
+      try {
+        const res = await fetch('https://restcountries.com/v3.1/all?fields=name,capital,region,flags');
+        const data = await res.json();
+        return data.map(c => ({
+          name: c.name.common,
+          capital: c.capital?.[0] || 'Tidak diketahui',
+          region: c.region,
+          flag: c.flags?.png
+        }));
+      } catch {
+        return [
+          { name: "Indonesia", capital: "Jakarta", region: "Asia", flag: "https://flagcdn.com/w320/id.png" },
+          { name: "Jepang", capital: "Tokyo", region: "Asia", flag: "https://flagcdn.com/w320/jp.png" },
+        ];
+      }
+    }
+
+    async function startCountryGameAPI() {
+      if (!apiCountries.length) apiCountries = await fetchCountries();
+      currentApiCountry = apiCountries[Math.floor(Math.random() * apiCountries.length)];
+      apiAttempts = 3;
+      askGuess();
+    }
+
+    function askGuess() {
+      if (apiAttempts <= 0) return showCountryResult(`Kesempatan habis!<br>Jawaban: <b>${currentApiCountry.name}</b>`, currentApiCountry.flag);
+
+      const guess = prompt(`Tebak Negara (Sisa: ${apiAttempts})\nIbukota: ${currentApiCountry.capital}\nRegion: ${currentApiCountry.region}`);
+      if (!guess) return;
+
+      if (guess.trim().toLowerCase() === currentApiCountry.name.toLowerCase()) {
+        showCountryResult(`✅ Benar! Ini adalah <b>${currentApiCountry.name}</b>`, currentApiCountry.flag);
+      } else {
+        apiAttempts--;
+        askGuess();
+      }
+    }
+
+    function showCountryResult(text, flag) {
+      const content = document.getElementById('countryModalContent');
+      content.innerHTML = `<p>${text}</p><img src="${flag}" alt="Bendera">` +
+        `<button class='modal-close' onclick='document.getElementById("countryModal").classList.remove("active")'>Tutup</button>`;
+      document.getElementById('countryModal').classList.add('active');
+    }
+  </script>
+</body>
+</html>
