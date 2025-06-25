@@ -270,6 +270,19 @@
         `<button class='modal-close' onclick='document.getElementById("countryModal").classList.remove("active")'>Tutup</button>`;
       document.getElementById('countryModal').classList.add('active');
     }
+    // Tutup sidebar jika klik di luar sidebar dan tombol menu
+document.addEventListener('click', function(e) {
+  const sidebar = document.getElementById('sidebar');
+  const menuIcon = document.querySelector('.menu-icon');
+
+  if (
+    sidebar.classList.contains('open') &&
+    !sidebar.contains(e.target) &&
+    !menuIcon.contains(e.target)
+  ) {
+    sidebar.classList.remove('open');
+  }
+});
   </script>
 </body>
 </html>
